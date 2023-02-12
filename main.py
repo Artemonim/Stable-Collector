@@ -1,8 +1,30 @@
 """
 Stable Collector by Artemonim, 2023
-v0.0.01-tech-demo
-
 Designed to navigate through a collection of images rendered in Stable Diffusion.
+
+Changelog:
+    v0.0.02-alpha:
+        TODO: Add normal album viewer
+        TODO: Add image viewer
+        TODO: Add image metadata viewer
+        TODO: Make it executable
+        TODO: Change path to the output folder trough the UI
+        TODO: Enter a query trough the UI
+
+Known issues:
+    - Non-adaptive aspect ratio
+    - Grid images oversize error
+
+Future plans:
+    - Set type of images to search for (grid, image)
+    - Copy found images to a new folder
+    - Export images with watermark
+    - Export images in optimized
+
+Dependencies:
+    - PIL (Pillow)
+    - tkinter
+    - simplejson (optional)
 """
 
 import os
@@ -15,8 +37,8 @@ except ImportError:
     import json
 
 # Constants
-SD_METADATA = ("extras", "parameters", "postprocessing")
-LIMITER = 100
+SD_METADATA = ("extras", "parameters", "postprocessing")    # Metadata keys that are used in Stable Diffusion (full?)
+LIMITER = 100   # TEST: For testing purposes
 
 # Path to the output folder with images
 path = "D:/Stable UI/stable-diffusion-webui/outputs/"   # TODO: Change this trough the UI
@@ -52,14 +74,14 @@ if __name__ == '__main__':
     print("Start working!")
     getPNGs(path)
     # Save pngs to json file
-    with open('Index/files.json', 'w') as f:
+    with open('Index/index.json', 'w') as f:
         json.dump(pngs, f)
     print("\nDone!")
     print(len(pngs), "files found!")
 
     # Read json file with pngs
-    # Look at SD_METADATA for metadata keys
-    with open('Index/files.json', 'r') as f:
+    # Look SD_METADATA for metadata keys
+    with open('Index/index.json', 'r') as f:
         data = json.load(f)
         # read first file in the json file and print its metadata in pretty format
         # print(json.dumps(Image.open(data[0]).info, indent=4, sort_keys=True))
